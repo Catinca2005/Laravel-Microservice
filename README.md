@@ -1,58 +1,124 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🛡️ Laravel Quote Microservice
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Developed a Laravel API that returns an insurance quote when you give it an ID.
+Built as an internship project to practice how real insurance systems works.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 💡 What It Does
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+You call one endpoint with an ID number, and the API gives you back the insurance quote saved in the database for that ID.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```
+GET /api/quote/{id}
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## 🗄️ What's Stored in the Database
 
-## Contributing
+Each quote has:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| Field | Example |
+|---|---|
+| Client name | Ion Popescu |
+| Car plate | B123XYZ |
+| Insurer | AsiguratorX |
+| Price | 545.50 RON |
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🧱 Project Structure
 
-## Security Vulnerabilities
+```
+laravel-api-offers/
+├── app/
+│   ├── Http/Controllers/QuoteController.php  ← handles the request
+│   └── Models/Quote.php                      ← talks to the database
+├── database/
+│   ├── migrations/                           ← creates the table
+│   └── seeders/QuoteSeeder.php               ← adds fake data
+├── routes/
+│   └── api.php                               ← defines the endpoint
+└── .env                                      ← your config
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## ⚙️ Tech Stack
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- 🐘 **PHP / Laravel**
+- 🗃️ **MySQL**
+- 🖥️ **Laravel Herd** (to run it locally)
+- 📬 **Postman** (to test it)
+
+---
+
+## 🚀 How to Run It
+
+**1. Clone the project**
+```bash
+git clone https://github.com/Catinca2005/Laravel-Microservice.git
+cd Laravel-Microservice
+composer install
+```
+
+**2. Set up your config**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+Open `.env` and fill in your database details:
+```env
+DB_DATABASE=laravel_quotes
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+**3. Create the table and add fake data**
+```bash
+php artisan migrate --seed
+```
+
+**4. Development Environment (Laravel Herd)**
+
+This project is configured to run using **Laravel Herd** for a seamless development experience.
+
+- Ensure Laravel Herd is installed and running on your machine.
+- Make sure the project folder is located within your Herd **"Sites"** path.
+- The API will be automatically served at `http://composer.test` — no need to run `php artisan serve`.
+
+---
+
+## 🧪 Try It Out
+
+Open Postman and send:
+
+```
+GET http://composer.test/api/quote/1
+```
+
+✅ **If the quote exists:**
+```json
+{
+    "id": 1,
+    "client_name": "Ion Popescu",
+    "car_plate": "B123XYZ",
+    "insurer_name": "AsiguratorX",
+    "price": "545.50"
+}
+```
+
+❌ **If the ID doesn't exist:**
+```json
+{
+    "error": "Quote not found"
+}
+```
+
+---
+
+## ✨ Features
+
+- 🔍 Look up any quote by ID
+- 💾 Data stored in MySQL with proper migrations
+- ⚠️ Returns a clean 404 error if the quote isn't found
