@@ -1,0 +1,45 @@
+# ==========================================
+# OS & Editor Files (Global Configurations)
+# ==========================================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.cursor/
+.nova/
+.zed/
+.codex/
+*.log
+
+# ==========================================
+# Application Environment & Secrets
+# ==========================================
+composer/.env
+composer/.env.backup
+composer/.env.production
+composer/auth.json
+
+# ==========================================
+# Package Manager Dependencies
+# ==========================================
+composer/vendor/
+composer/node_modules/
+
+# ==========================================
+# Laravel Storage & Public Compiled Assets
+# ==========================================
+composer/public/build/
+composer/public/hot/
+composer/public/storage/
+composer/storage/*.key
+composer/storage/pail/
+
+# ==========================================
+# Testing Cache & IDE Helper Files
+# ==========================================
+composer/.phpunit.cache/
+composer/.phpunit.result.cache
+composer/.phpactor.json
+composer/_ide_helper.php
+composer/Homestead.json
+composer/Homestead.yaml
